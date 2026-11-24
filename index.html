@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Frame Viewer</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background-color: #1e1e1e;
+      color: #ffffff;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      padding: 10px 15px;
+      background-color: #2d2d2d;
+      border-bottom: 1px solid #404040;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #555;
+      border-radius: 4px;
+      background-color: #1e1e1e;
+      color: #ffffff;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: #0078d4;
+    }
+
+    button {
+      padding: 8px 16px;
+      background-color: #0078d4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0063b1;
+    }
+
+    iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <input type="text" id="urlInput" placeholder="Enter URL (e.g., https://example.com)" value="https://example.com">
+    <button onclick="loadUrl()">Go</button>
+  </div>
+
+  <iframe id="viewerFrame" src="https://example.com" title="Web Viewer"></iframe>
+
+  <script>
+    const urlInput = document.getElementById('urlInput');
+    const viewerFrame = document.getElementById('viewerFrame');
+
+    function loadUrl() {
+      let url = urlInput.value.trim();
+      if (!url) return;
+
+      // Automatically add https:// if the user forgets it
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
+        urlInput.value = url;
+      }
+
+      viewerFrame.src = url;
+    }
+
+    // Allow pressing "Enter" inside the text box to load the URL
+    urlInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        loadUrl();
+      }
+    });
+  </script>
+
+</body>
+</html>
